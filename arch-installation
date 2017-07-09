@@ -1,0 +1,104 @@
+Arch Linux Installation
+nomodeset
+
+loadkeys la-latin1
+
+Networking
+
+dhcpcd  
+netctl /etc/netctl/example/wireless_wpa
+Wifi-menu
+
+Partitioning Disk
+gdisk / cfdisk 
+o(format) 
+a(bootable)
+n (new)
+type 82 (swap partition)
+w
+8300hexcode
+
+mkfs.ext4
+mkswap /dev
+swapon /dev
+Mount 
+mkdir /mnt/boot && mount /dev /mnt/boot
+mkdir -p /mnt/boot/efi && mount /dev /mnt/boot/efi
+
+
+Synchronization the mirror by speed
+pacman -Sy
+pacman -S reflector
+ reflector --verbose --latest 5 --sort rate --save /etc/pacman.d/mirrorlist
+
+
+Installing Base pacs
+pacstrap -i /mnt base base-devel
+
+
+
+FSTAB
+# genfstab -U /mnt >> /mnt/etc/fstab
+
+
+CHROOT
+# arch-chroot /mnt
+
+passwd
+
+
+
+Local
+/etc/locale.gen UNCOMMENT
+# locale-gen
+
+#echo LANG=en_US.UTF-8 > /etc/locale.conf
+
+# echo KEYMAP=de-latin1 > /etc/vconsole.conf
+
+Time Zone
+# ln -sf /usr/share/zoneinfo/Region/City /etc/localtime
+
+# hwclock --systohc
+
+
+Grub
+
+#pacman -S grub-bios grub efibootmgr
+
+# grub-install --target=x86_64-efi --efi-directory=/boot/efi --bootloader-id=grub
+
+##grub-install /dev/sda
+
+#mkinitcpio -p linux
+
+#grub-mkconfig -o /boot/grub/grub.cfg
+
+...................................................
+
+sswd soo
+
+Hostname
+
+#echo Arch > /etc/hostname
+#nano /etc/hotsname
+
+
+Multilib
+
+#nano /etc/pacman.conf
+
+
+Sudo
+
+#pacman -S sudo
+#visudo
+
+Video & Sound drivers
+
+xorg-server xorg-server-utils xorg-xinit mesa xf86-video-intel nvidia-340xx bumblebee
+
+xfce4 xfce4-goodies
+
+#cp /etc/X11/xinit/xinitrc ~/.xinitrc
+# add exec startxfce4
