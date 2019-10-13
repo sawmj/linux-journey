@@ -1,0 +1,4 @@
+icon.theme: ~/.local/share/icon/
+rofi.font: hack 15
+rofi.modi: drun
+rofi.theme: /usr/share/rofi/themes/onedark.rasi
